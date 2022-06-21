@@ -5,7 +5,7 @@ This driver is forked and adapted fromt the
 
 Developed in collaboration between:
 
-[<img height="60" alt="OCADO" src="logos/OT_A3 logo.pdf">](https://careers.ocadogroup.com/careers/technology) and
+[<img height="60" alt="OCADO" src="logos/Ocado.png">](https://careers.ocadogroup.com/careers/technology) and
 [<img height="60" alt="BRL" src="logos/BRL-SNI-1920w.webp">](https://www.bristolroboticslab.com/) and
 [<img height="60" alt="TAS" src="logos/TAS_FN_Logo_300_Colour.png">](https://tasfunctionality.bristol.ac.uk/) and
 [<img height="80" alt="UOB" src="logos/UOB-logo-2-.png">](https://www.bristol.ac.uk/)
