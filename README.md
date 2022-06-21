@@ -1,3 +1,27 @@
+# Softrobot_TAS_UR10
+This is the repository to controll the UR10 arms for the TAS project
+This driver is forked and adapted fromt the 
+[Universal_Robots_ROS_Driver](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver)
+
+Developed in collaboration between:
+
+[<img height="60" alt="OCADO" src="ur_robot_driver/logos/Ocado.webp">](https://careers.ocadogroup.com/careers/technology) and
+[<img height="60" alt="BRL" src="ur_robot_driver/logos/BRL-SNI-1920w.webp">](https://www.bristolroboticslab.com/) and
+[<img height="60" alt="TAS" src="ur_robot_driver/logos/TAS_FN_Logo_300_Colour.png">](https://tasfunctionality.bristol.ac.uk/) and
+[<img height="80" alt="UOB" src="ur_robot_driver/logos/UOB-logo-2-.png">](https://www.bristol.ac.uk/)
+
+
+This project has received funding from the UKRI
+research and innovation programme under grant agreement no.???? 
+
+## How to report an issue
+Please contact Anthony Le (anthony.le@bristol.ac.uk)
+
+
+## How to get help
+If you need help using this driver, please contact Anthony Le (anthony.le@bristol.ac.uk)
+
+
 # ur_robot_driver 
 
 This package contains the actual driver for UR robots. It is part of the *universal_robots_driver*
