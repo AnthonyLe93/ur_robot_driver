@@ -15,8 +15,11 @@ import random
 GROUP_NAME_ARM = "manipulator"
 FIXED_FRAME = 'world'
 #GROUP_NAME_GRIPPER = "NAME OF GRIPPER"
+robot_operational = True
+counter = 0
 
-class TestMove():
+
+class UR10_move():
 
     def __init__(self):
         roscpp_initialize(sys.argv)        
@@ -77,6 +80,7 @@ class TestMove():
         self.robot_arm.stop()       
         rospy.sleep(1)        
         
+        '''
         print("====== move plan go to gripping pose ======")
         self.robot_arm.set_named_target("grip-home")  #go to goal state.
         joint_goal = self.robot_arm.get_current_joint_values()
@@ -89,7 +93,8 @@ class TestMove():
         
         self.robot_arm.go(wait=True)
         print("====== move plan go to grip-home ======")        
-        rospy.sleep(1)       
+        rospy.sleep(1)
+        '''     
 
 #        robot_arm.set_named_target("up")
 #        robot_arm.go(wait=True)
@@ -99,15 +104,28 @@ class TestMove():
 
         print(robot_state)
 
+
+    
+
         
 if __name__=='__main__':
-    tm = TestMove()
-    tm.__init__()
-    tm.display_trajectory()
-    tm.move_code()
 
-    rospy.spin()
-    roscpp_shutdown()
+    robot = UR10_move()
+    robot.__init__()
+    robot.display_trajectory()
+    try:
+        if counter == 10:
+            robot_operational = False
+        while(robot_operational):
+            robot.move_code()
+            #rospy.spin()
+            #roscpp_shutdown()
+            counter += 1
+            print(counter)
+    except KeyboardInterrupt:
+        print('Interrupted')
+        sys.exit(0)
+
     
     
     
