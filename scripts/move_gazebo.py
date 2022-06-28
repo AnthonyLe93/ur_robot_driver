@@ -62,33 +62,40 @@ class TestMove():
 
     def move_code(self):
           
-        #self.robot_arm.set_named_target("home")  #go to goal state.
+        self.robot_arm.set_named_target("home")  #go to goal state. tool exchange state
         joint_goal = self.robot_arm.get_current_joint_values()
-        joint_goal[0] = 0
-        joint_goal[1] = -2*pi / 8
-        joint_goal[2] = 0
-        joint_goal[3] = -2*pi / 4
-        joint_goal[4] = 0
-        joint_goal[5] = 2*pi / 6  # 1/6 of a turn
+        joint_goal[0] = -1.547
+        joint_goal[1] = -1.7
+        joint_goal[2] = -2.38
+        joint_goal[3] = 1.16
+        joint_goal[4] = 1.55
+        joint_goal[5] = 0
         
         self.robot_arm.go(joint_goal, wait=True)
-        print("====== move plan go to home 1 ======") 
+        print("====== move plan go to home (tool exchange) ======") 
         # Calling ``stop()`` ensures that there is no residual movement
         self.robot_arm.stop()       
         rospy.sleep(1)        
         
-#        print("====== move plan go to up ======")
-        #self.robot_arm.set_named_target("zeros")  #go to goal state.
+        print("====== move plan go to gripping pose ======")
+        self.robot_arm.set_named_target("grip-home")  #go to goal state.
+        joint_goal = self.robot_arm.get_current_joint_values()
+        joint_goal[0] = -1.29
+        joint_goal[1] = -1.57
+        joint_goal[2] = -2.22
+        joint_goal[3] = -0.92
+        joint_goal[4] = 1.55
+        joint_goal[5] = 0
         
-        #self.robot_arm.go(wait=True)
-        #print("====== move plan go to zeros ======")        
-        #rospy.sleep(1)       
+        self.robot_arm.go(wait=True)
+        print("====== move plan go to grip-home ======")        
+        rospy.sleep(1)       
 
 #        robot_arm.set_named_target("up")
 #        robot_arm.go(wait=True)
 
-        robot_state = self.robot_arm.get_current_pose();
-        robot_angle = self.robot_arm.get_current_joint_values();
+        robot_state = self.robot_arm.get_current_pose()
+        robot_angle = self.robot_arm.get_current_joint_values()
 
         print(robot_state)
 
