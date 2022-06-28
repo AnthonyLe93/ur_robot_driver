@@ -63,16 +63,18 @@ class TrajectoryClient:
         
         self.joint_trajectory_controller = JOINT_TRAJECTORY_CONTROLLERS[0]
         self.cartesian_trajectory_controller = CARTESIAN_TRAJECTORY_CONTROLLERS[0]
+        self.robot = robot
 
     def send_joint_trajectory(self):
         """Creates a trajectory and sends it using the selected action server"""
-        timeout = rospy.Duration(5)        
+               
         
         trajectory_client = actionlib.SimpleActionClient(
             "{}/follow_joint_trajectory".format(self.joint_trajectory_controller),
             FollowJointTrajectoryAction,
         )
-               
+        
+        timeout = rospy.Duration(5)        
         if not trajectory_client.wait_for_server(timeout):
             self.fail(
                 "Could not reach controller action. Make sure that the driver is actually running."
@@ -194,7 +196,7 @@ class TrajectoryClient:
               rospy.logwarn("Could not parse pose \"%s\" from the param server:", i);
               rospy.logwarn(sys.exc_info())   
             
-        
+            
         rospy.loginfo("Executing trajectory using the {}".format(self.joint_trajectory_controller))
 
         trajectory_client.send_goal(goal)
@@ -271,8 +273,7 @@ class TrajectoryClient:
         rospy.loginfo("Trajectory execution finished in state {}".format(result.error_code))
         rospy.sleep(5) # wait 5s
 
-    def pick_operation_mode(self):
-        global robot
+    def pick_operation_mode(self):        
         # Ask the user for mode of operations              
         input_str = input(
                 "Please confirm the robot operation mode.\n"                
@@ -296,15 +297,18 @@ class TrajectoryClient:
 
 
 
-if __name__ == "__main__":    
-            
+if __name__ == "__main__":             
     client = TrajectoryClient()
     counter = 0    
     #client.pick_operation_mode()
-    while robot:                             
+    while client.robot:                          
         client.move_arm()
         #client.pick_operation_mode()
         #client.send_joint_trajectory()  
         print('counter = ', counter)              
         counter = counter + 1   
 
+            
+            
+            
+            
