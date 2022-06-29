@@ -7,6 +7,7 @@ roslaunch ur_robot_driver tas-ur10-1.launch
 roslaunch ur10_moveit_config ur10_moveit_planning_execution.launch
 roslaunch ur10_moveit_config moveit_rviz.launch rviz_config:=$(rospack find ur10_moveit_config)/launch/moveit.rviz
 rosrun ur_robot_driver UR10_1_control.py 
+rosrun ur_robot_driver move_gazebo.py                 # testing with moveit
 rosrun ur_robot_driver JointState_sub.py 
 # Run each command in a seperate terminal windows within catkin_ws directory
 [Using the ur_robot_driver](https://github.com/UniversalRobots/Universal_Robots_ROS_Driver/blob/master/ur_robot_driver/doc/usage_example.md)

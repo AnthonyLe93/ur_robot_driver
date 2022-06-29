@@ -63,7 +63,7 @@ class UR10_move():
         print(self.robot_cmd.get_current_state())
         print("")           
 
-    def move_code(self):
+    def move_home(self):
           
         self.robot_arm.set_named_target("home")  #go to goal state. tool exchange state
         joint_goal = self.robot_arm.get_current_joint_values()
@@ -78,11 +78,16 @@ class UR10_move():
         print("====== move plan go to home (tool exchange) ======") 
         # Calling ``stop()`` ensures that there is no residual movement
         self.robot_arm.stop()       
-        rospy.sleep(1)        
+        rospy.sleep(1)
+        robot_state = self.robot_arm.get_current_pose()
+        robot_angle = self.robot_arm.get_current_joint_values()
+
+        print(robot_state)
         
-        '''
-        print("====== move plan go to gripping pose ======")
-        self.robot_arm.set_named_target("grip-home")  #go to goal state.
+        
+    def move_grip(self):
+        
+        self.robot_arm.set_named_target("home")  #go to goal state. Ready to grip      
         joint_goal = self.robot_arm.get_current_joint_values()
         joint_goal[0] = -1.29
         joint_goal[1] = -1.57
@@ -91,18 +96,84 @@ class UR10_move():
         joint_goal[4] = 1.55
         joint_goal[5] = 0
         
-        self.robot_arm.go(wait=True)
-        print("====== move plan go to grip-home ======")        
+        self.robot_arm.go(joint_goal, wait=True)
+        print("====== move plan go to grip home ======")
+        # Calling ``stop()`` ensures that there is no residual movement
+        self.robot_arm.stop()         
         rospy.sleep(1)
-        '''     
+            
 
 #        robot_arm.set_named_target("up")
 #        robot_arm.go(wait=True)
+
+
+                   
+        joint_goal = self.robot_arm.get_current_joint_values()
+        joint_goal[0] = -1.33
+        joint_goal[1] = -1.909
+        joint_goal[2] = -2.33
+        joint_goal[3] = -0.38
+        joint_goal[4] = 1.54
+        joint_goal[5] = 0
+        
+        self.robot_arm.go(joint_goal, wait=True)
+        print("====== move gripper down and wait 5s ======")
+        # Calling ``stop()`` ensures that there is no residual movement
+        self.robot_arm.stop()         
+        rospy.sleep(5)
+
+
+        self.robot_arm.set_named_target("up")  #go to goal state. Go up                
+        joint_goal = self.robot_arm.get_current_joint_values()
+        joint_goal[0] = -1.29
+        joint_goal[1] = -1.58
+        joint_goal[2] = -2.22
+        joint_goal[3] = -0.92
+        joint_goal[4] = 1.55
+        joint_goal[5] = 0
+        
+        self.robot_arm.go(joint_goal, wait=True)
+        print("====== move gripper up and wait 1s ======")
+        # Calling ``stop()`` ensures that there is no residual movement
+        self.robot_arm.stop()         
+        rospy.sleep(1)
+
+                    
+        joint_goal = self.robot_arm.get_current_joint_values()
+        joint_goal[0] = -0.94
+        joint_goal[1] = -1.70
+        joint_goal[2] = -2.16
+        joint_goal[3] = -0.60
+        joint_goal[4] = 1.54
+        joint_goal[5] = 0
+        
+        self.robot_arm.go(joint_goal, wait=True)
+        print("====== move gripper across and wait 1s ======")
+        # Calling ``stop()`` ensures that there is no residual movement
+        self.robot_arm.stop()         
+        rospy.sleep(1)
+
+
+        joint_goal = self.robot_arm.get_current_joint_values()
+        joint_goal[0] = -0.89
+        joint_goal[1] = -1.97
+        joint_goal[2] = -2.21
+        joint_goal[3] = -0.43
+        joint_goal[4] = 1.54
+        joint_goal[5] = math.radians(180)  # convert degree to radian
+        
+        self.robot_arm.go(joint_goal, wait=True)
+        print("====== move gripper down, rotate end effector 180 degree and wait 5s ======")
+        # Calling ``stop()`` ensures that there is no residual movement
+        self.robot_arm.stop()         
+        rospy.sleep(5)
+
 
         robot_state = self.robot_arm.get_current_pose()
         robot_angle = self.robot_arm.get_current_joint_values()
 
         print(robot_state)
+        print(robot_angle)
 
 
     
@@ -112,19 +183,17 @@ if __name__=='__main__':
 
     robot = UR10_move()
     robot.__init__()
-    robot.display_trajectory()
-    try:
-        if counter == 10:
+    robot.display_trajectory()       
+    while(robot_operational):
+        robot.move_home()
+        robot.move_grip()
+        #rospy.spin()
+        #roscpp_shutdown()
+        counter += 1
+        print(counter)
+        if counter == 3:
             robot_operational = False
-        while(robot_operational):
-            robot.move_code()
-            #rospy.spin()
-            #roscpp_shutdown()
-            counter += 1
-            print(counter)
-    except KeyboardInterrupt:
-        print('Interrupted')
-        sys.exit(0)
+
 
     
     
