@@ -17,6 +17,7 @@ FIXED_FRAME = 'world'
 #GROUP_NAME_GRIPPER = 'CUBIE-GRIP'
 robot_operational = True
 counter = 0
+JOINT_HOME = (-1.547, -1.7, -2.38, 1.16, 1.55, 0)
 
 
 class UR10_move():
@@ -182,20 +183,31 @@ if __name__=='__main__':
     robot.__init__()
     robot.display_trajectory()
     try:
-        runTime = int(input('Enter how many times you want the robot to run through the pick and place sequence: '))
+        runTime = int(input('''Enter how many times you want the robot to run through the pick and place sequence: 
+        \nOr enter 0 to enter tool exchange mode:
+        '''))
     except ValueError:
         print('Invalid input!!!\n Please enter a integer!')
         sys.exit(0)
 
     while robot_operational:
-        #robot.move_home()
-        robot.move_grip()
-        #rospy.spin()
-        #roscpp_shutdown()
-        counter += 1
-        print(counter)
-        if counter == runTime:
-            robot_operational = False
+        if runTime == 0:
+            robot.move_home(JOINT_HOME)
+            if robot.move_home(JOINT_HOME):
+                print('The arm is at tool exchange mode')
+                break
+            else:
+                print('The arm is at another position')
+        else:
+            robot.move_grip()
+            #rospy.spin()
+            #roscpp_shutdown()
+            counter += 1
+            print(counter)
+            if counter == runTime:
+                robot_operational = False
+
+
 
 
     
