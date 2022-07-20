@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+
 <launch>
   <arg name="debug" default="false" doc="Debug flag that will get passed on to ur_common.launch"/>
   <arg name="robot_ip" default="192.168.1.129" doc="IP address by which the robot can be reached."/>
@@ -17,5 +18,6 @@
 
   <include file="$(find ur_robot_driver)/launch/ur_common.launch" pass_all_args="true">
     <arg name="use_tool_communication" value="false"/>
-  </include> 
+  </include>
+
 </launch>
