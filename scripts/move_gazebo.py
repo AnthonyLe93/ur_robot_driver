@@ -90,102 +90,117 @@ class UR10_move():
             return True
         return False
 
-    def move_grip(self):
+    def poses(self):
 
         joint_goal = self.robot_arm.get_current_joint_values()
-        joint_goal[0] = -1.29
-        joint_goal[1] = -1.57
-        joint_goal[2] = -2.22
-        joint_goal[3] = -0.92
-        joint_goal[4] = 1.55
-        joint_goal[5] = 0
+        joint_goal[0] = math.radians(-74.64)
+        joint_goal[1] = math.radians(-83.47)
+        joint_goal[2] = math.radians(-117.29)
+        joint_goal[3] = math.radians(-67.70)
+        joint_goal[4] = math.radians(88)
+        joint_goal[5] = math.radians(0)
         self.robot_arm.remember_joint_values("ready_to_grip", joint_goal)  # go to goal state. Ready to grip
-        
-        self.robot_arm.go(joint_goal, wait=True)
-        print("====== move plan go to grip home ======")
-        # Calling ``stop()`` ensures that there is no residual movement
-        self.robot_arm.stop()         
-        rospy.sleep(1)
 
         joint_goal = self.robot_arm.get_current_joint_values()
-        joint_goal[0] = -1.33
-        joint_goal[1] = -1.909
-        joint_goal[2] = -2.33
-        joint_goal[3] = -0.38
-        joint_goal[4] = 1.54
-        joint_goal[5] = 0
-        
-        self.robot_arm.go(joint_goal, wait=True)
-        print("====== move gripper down and wait 5s ======")
-        # Calling ``stop()`` ensures that there is no residual movement
-        self.robot_arm.stop()         
-        rospy.sleep(5)
+        joint_goal[0] = math.radians(-74.53)
+        joint_goal[1] = math.radians(-99.68)
+        joint_goal[2] = math.radians(-131.05)
+        joint_goal[3] = math.radians(-37.72)
+        joint_goal[4] = math.radians(87.93)
+        joint_goal[5] = math.radians(180)
+        self.robot_arm.remember_joint_values("move_gripper_down", joint_goal)  # go to goal state.
 
         joint_goal = self.robot_arm.get_current_joint_values()
-        joint_goal[0] = -1.29
-        joint_goal[1] = -1.58
-        joint_goal[2] = -2.22
-        joint_goal[3] = -0.92
-        joint_goal[4] = 1.55
-        joint_goal[5] = 0
-        
-        self.robot_arm.go(joint_goal, wait=True)
-        print("====== move gripper up and wait 1s ======")
-        # Calling ``stop()`` ensures that there is no residual movement
-        self.robot_arm.stop()         
-        rospy.sleep(1)
+        joint_goal[0] = math.radians(-74.64)
+        joint_goal[1] = math.radians(-83.47)
+        joint_goal[2] = math.radians(-117.29)
+        joint_goal[3] = math.radians(-67.70)
+        joint_goal[4] = math.radians(88)
+        joint_goal[5] = math.radians(0)
+        self.robot_arm.remember_joint_values("move_gripper_up", joint_goal)  # go to goal state.
 
         joint_goal = self.robot_arm.get_current_joint_values()
-        joint_goal[0] = -0.94
-        joint_goal[1] = -1.70
-        joint_goal[2] = -2.16
-        joint_goal[3] = -0.60
-        joint_goal[4] = 1.54
-        joint_goal[5] = 0
-        
-        self.robot_arm.go(joint_goal, wait=True)
-        print("====== move gripper across and wait 1s ======")
-        # Calling ``stop()`` ensures that there is no residual movement
-        self.robot_arm.stop()         
-        rospy.sleep(1)
+        joint_goal[0] = math.radians(-49.38)
+        joint_goal[1] = math.radians(-92.61)
+        joint_goal[2] = math.radians(-115.88)
+        joint_goal[3] = math.radians(-61.88)
+        joint_goal[4] = math.radians(87.76)
+        joint_goal[5] = math.radians(90)
+        self.robot_arm.remember_joint_values("move_gripper_across", joint_goal)  # go to goal state.
 
         joint_goal = self.robot_arm.get_current_joint_values()
-        joint_goal[0] = -0.89
-        joint_goal[1] = -1.97
-        joint_goal[2] = -2.21
-        joint_goal[3] = -0.43
-        joint_goal[4] = 1.54
-        joint_goal[5] = math.radians(180)  # convert degree to radian
+        joint_goal[0] = math.radians(-49.32)
+        joint_goal[1] = math.radians(-104.14)
+        joint_goal[2] = math.radians(-124.10)
+        joint_goal[3] = math.radians(-42.14)
+        joint_goal[4] = math.radians(87.71)
+        joint_goal[5] = math.radians(0)
         self.robot_arm.remember_joint_values("end_grip", joint_goal)  # go to goal state. Ready to grip
-
-        self.robot_arm.go(joint_goal, wait=True)
-        print("====== move gripper down, rotate end effector 180 degree and wait 5s ======")
-        # Calling ``stop()`` ensures that there is no residual movement
-        self.robot_arm.stop()         
-        rospy.sleep(5)
 
         robot_state = self.robot_arm.get_current_pose()
         joint_goal = self.robot_arm.get_current_joint_values()
         print(robot_state)
+        print(joint_goal)
         goal_names = self.robot_arm.get_remembered_joint_values()
-        print(goal_names)
-        try:
-            joint_goal = goal_names.get('ready_to_grip')
-            print(joint_goal)
-            self.robot_arm.go(joint_goal, wait =True)
-        except:
-            if self.move_home(joint_goal):
-                self.move_home(joint_goal)
+        print(f'goal_names = {goal_names}')
+        return goal_names
 
-if __name__=='__main__':
+    def move_grip(self):
+        joint_goal = self.poses()
+        goal = joint_goal.get('ready_to_grip')
+        print(f'joint_goal = {goal}')
+
+        self.robot_arm.go(goal, wait=True)
+        print("====== move plan go to grip home ======")
+        # Calling ``stop()`` ensures that there is no residual movement
+        self.robot_arm.stop()
+        rospy.sleep(1)
+
+        goal = joint_goal.get('move_gripper_down')
+        print(f'joint_goal = {goal}')
+
+        self.robot_arm.go(goal, wait=True)
+        print("====== move gripper down and wait 5s ======")
+        # Calling ``stop()`` ensures that there is no residual movement
+        self.robot_arm.stop()
+        rospy.sleep(5)
+
+        goal = joint_goal.get('move_gripper_up')
+        print(f'joint_goal = {goal}')
+
+        self.robot_arm.go(goal, wait=True)
+        print("====== move gripper up and wait 1s ======")
+        # Calling ``stop()`` ensures that there is no residual movement
+        self.robot_arm.stop()
+        rospy.sleep(1)
+
+        goal = joint_goal.get('move_gripper_across')
+        print(f'joint_goal = {goal}')
+
+        self.robot_arm.go(goal, wait=True)
+        print("====== move gripper across and wait 1s ======")
+        # Calling ``stop()`` ensures that there is no residual movement
+        self.robot_arm.stop()
+        rospy.sleep(1)
+
+        goal = joint_goal.get('end_grip')
+        print(f'joint_goal = {goal}')
+
+        self.robot_arm.go(goal, wait=True)
+        print("====== move gripper down, rotate end effector 90 degree and wait 5s ======")
+        # Calling ``stop()`` ensures that there is no residual movement
+        self.robot_arm.stop()
+        rospy.sleep(5)
+
+
+if __name__ == '__main__':
 
     robot = UR10_move()
     robot.__init__()
     robot.display_trajectory()
     try:
         runTime = int(input('''Enter how many times you want the robot to run through the pick and place sequence: 
-        \nOr enter 0 to enter tool exchange mode:
-        '''))
+Or enter '0' to enter tool exchange mode: '''))
     except ValueError:
         print('Invalid input!!!\n Please enter a integer!')
         sys.exit(0)
