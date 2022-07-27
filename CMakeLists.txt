@@ -31,8 +31,6 @@ find_package(catkin REQUIRED
     ur_msgs
     pass_through_controllers
     kdl_parser
-    std_msgs
-    message_generation
 )
 find_package(Boost REQUIRED)
 find_package(ur_client_library REQUIRED)
@@ -65,8 +63,6 @@ catkin_package(
     ur_dashboard_msgs
     ur_msgs
     message_runtime
-    message_generation
-    std_msgs
   DEPENDS
     Boost
     ur_client_library
@@ -94,11 +90,6 @@ add_message_files(
   ATI_mini45.msg
 )
 
-generate_messages(
-  DEPENDENCIES
-  geometry_msgs
-  std_msgs
-)
 
 include_directories(
   include
