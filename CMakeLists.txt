@@ -31,6 +31,8 @@ find_package(catkin REQUIRED
     ur_msgs
     pass_through_controllers
     kdl_parser
+    std_msgs
+    message_generation
 )
 find_package(Boost REQUIRED)
 find_package(ur_client_library REQUIRED)
@@ -62,6 +64,9 @@ catkin_package(
     trajectory_msgs
     ur_dashboard_msgs
     ur_msgs
+    message_runtime
+    message_generation
+    std_msgs
   DEPENDS
     Boost
     ur_client_library
@@ -83,6 +88,17 @@ add_compile_options(-Wall)
 add_compile_options(-Wextra)
 add_compile_options(-Wno-unused-parameter)
 
+## Generate messages in the 'msg' folder
+add_message_files(
+  FILES
+  ATI_mini45.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+  geometry_msgs
+  std_msgs
+)
 
 include_directories(
   include
