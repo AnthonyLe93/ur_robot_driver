@@ -1,15 +1,9 @@
 #!/usr/bin/env python3
 import rospy
 import os
-import sys
-from std_msgs.msg import String
 from sensor_msgs.msg import JointState
-from control_msgs.msg import FollowJointTrajectoryActionGoal
 from ur_dashboard_msgs.msg import SetModeAction, SetModeGoal, RobotMode
-from control_msgs.msg import FollowJointTrajectoryAction, FollowJointTrajectoryGoal
-from trajectory_msgs.msg import JointTrajectoryPoint
 import numpy as np
-import unittest
 import actionlib
 
 

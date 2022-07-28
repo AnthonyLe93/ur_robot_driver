@@ -115,7 +115,14 @@ install(TARGETS ur_robot_driver_plugin urcl_log_handler ur_robot_driver_node rob
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-catkin_install_python(PROGRAMS scripts/tool_communication scripts/test_move scripts/UR10_1_control.py scripts/JointState_sub.py scripts/ati_1.py scripts/move_gazebo.py
+catkin_install_python(PROGRAMS
+  scripts/tool_communication
+  scripts/test_move
+  scripts/UR10_1_control.py
+  scripts/JointState_sub.py
+  scripts/ati_1.py
+  scripts/move_gazebo.py
+  scripts/ati_message.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY config launch resources
