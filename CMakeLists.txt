@@ -31,42 +31,11 @@ find_package(catkin REQUIRED
     ur_msgs
     pass_through_controllers
     kdl_parser
+    message_generation
 )
 find_package(Boost REQUIRED)
 find_package(ur_client_library REQUIRED)
 
-catkin_package(
-  INCLUDE_DIRS
-    include
-  LIBRARIES
-    ur_robot_driver_plugin
-    urcl_log_handler
-  CATKIN_DEPENDS
-    actionlib
-    controller_manager
-    control_msgs
-    geometry_msgs
-    hardware_interface
-    kdl_parser
-    pass_through_controllers
-    pluginlib
-    roscpp
-    scaled_joint_trajectory_controller
-    sensor_msgs
-    speed_scaling_interface
-    speed_scaling_state_controller
-    std_srvs
-    tf
-    tf2_geometry_msgs
-    tf2_msgs
-    trajectory_msgs
-    ur_dashboard_msgs
-    ur_msgs
-    message_runtime
-  DEPENDS
-    Boost
-    ur_client_library
-)
 
 # check c++11 / c++0x
 include(CheckCXXCompilerFlag)
@@ -96,6 +65,8 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
 )
+
+
 
 add_library(ur_robot_driver_plugin
   src/dashboard_client_ros.cpp
@@ -158,4 +129,37 @@ install(DIRECTORY include/${PROJECT_NAME}/
 
 install(FILES hardware_interface_plugin.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+catkin_package(
+  INCLUDE_DIRS
+    include
+  LIBRARIES
+    ur_robot_driver_plugin
+    urcl_log_handler
+  CATKIN_DEPENDS
+    actionlib
+    controller_manager
+    control_msgs
+    geometry_msgs
+    hardware_interface
+    kdl_parser
+    pass_through_controllers
+    pluginlib
+    roscpp
+    scaled_joint_trajectory_controller
+    sensor_msgs
+    speed_scaling_interface
+    speed_scaling_state_controller
+    std_srvs
+    tf
+    tf2_geometry_msgs
+    tf2_msgs
+    trajectory_msgs
+    ur_dashboard_msgs
+    ur_msgs
+    message_runtime
+  DEPENDS
+    Boost
+    ur_client_library
 )
