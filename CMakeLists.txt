@@ -32,6 +32,9 @@ find_package(catkin REQUIRED
     pass_through_controllers
     kdl_parser
     message_generation
+    rospy
+    message_runtime
+    std_msgs
 )
 find_package(Boost REQUIRED)
 find_package(ur_client_library REQUIRED)
@@ -54,18 +57,21 @@ add_compile_options(-Wextra)
 add_compile_options(-Wno-unused-parameter)
 
 ## Generate messages in the 'msg' folder
-add_message_files(
-  FILES
-  ATI_mini45.msg
-)
+#add_message_files(
+#  FILES
+#)
 
+generate_messages(
+  DEPENDENCIES
+  geometry_msgs
+  std_msgs
+)
 
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
 )
-
 
 
 add_library(ur_robot_driver_plugin
@@ -122,7 +128,6 @@ catkin_install_python(PROGRAMS
   scripts/JointState_sub.py
   scripts/ati_1.py
   scripts/move_gazebo.py
-  scripts/ati_message.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY config launch resources
@@ -165,7 +170,7 @@ catkin_package(
     trajectory_msgs
     ur_dashboard_msgs
     ur_msgs
-    message_runtime
+    rospy
   DEPENDS
     Boost
     ur_client_library
