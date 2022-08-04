@@ -31,41 +31,14 @@ find_package(catkin REQUIRED
     ur_msgs
     pass_through_controllers
     kdl_parser
+    message_generation
+    rospy
+    message_runtime
+    std_msgs
 )
 find_package(Boost REQUIRED)
 find_package(ur_client_library REQUIRED)
 
-catkin_package(
-  INCLUDE_DIRS
-    include
-  LIBRARIES
-    ur_robot_driver_plugin
-    urcl_log_handler
-  CATKIN_DEPENDS
-    actionlib
-    controller_manager
-    control_msgs
-    geometry_msgs
-    hardware_interface
-    kdl_parser
-    pass_through_controllers
-    pluginlib
-    roscpp
-    scaled_joint_trajectory_controller
-    sensor_msgs
-    speed_scaling_interface
-    speed_scaling_state_controller
-    std_srvs
-    tf
-    tf2_geometry_msgs
-    tf2_msgs
-    trajectory_msgs
-    ur_dashboard_msgs
-    ur_msgs
-  DEPENDS
-    Boost
-    ur_client_library
-)
 
 # check c++11 / c++0x
 include(CheckCXXCompilerFlag)
@@ -83,12 +56,23 @@ add_compile_options(-Wall)
 add_compile_options(-Wextra)
 add_compile_options(-Wno-unused-parameter)
 
+## Generate messages in the 'msg' folder
+#add_message_files(
+#  FILES
+#)
+
+generate_messages(
+  DEPENDENCIES
+  geometry_msgs
+  std_msgs
+)
 
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
 )
+
 
 add_library(ur_robot_driver_plugin
   src/dashboard_client_ros.cpp
@@ -137,7 +121,13 @@ install(TARGETS ur_robot_driver_plugin urcl_log_handler ur_robot_driver_node rob
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-catkin_install_python(PROGRAMS scripts/tool_communication scripts/test_move scripts/UR10_1_control.py scripts/JointState_sub.py scripts/ati_1.py scripts/move_gazebo.py
+catkin_install_python(PROGRAMS
+  scripts/tool_communication
+  scripts/test_move
+  scripts/UR10_1_control.py
+  scripts/JointState_sub.py
+  scripts/ati_1.py
+  scripts/move_gazebo.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY config launch resources
@@ -151,4 +141,37 @@ install(DIRECTORY include/${PROJECT_NAME}/
 
 install(FILES hardware_interface_plugin.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+catkin_package(
+  INCLUDE_DIRS
+    include
+  LIBRARIES
+    ur_robot_driver_plugin
+    urcl_log_handler
+  CATKIN_DEPENDS
+    actionlib
+    controller_manager
+    control_msgs
+    geometry_msgs
+    hardware_interface
+    kdl_parser
+    pass_through_controllers
+    pluginlib
+    roscpp
+    scaled_joint_trajectory_controller
+    sensor_msgs
+    speed_scaling_interface
+    speed_scaling_state_controller
+    std_srvs
+    tf
+    tf2_geometry_msgs
+    tf2_msgs
+    trajectory_msgs
+    ur_dashboard_msgs
+    ur_msgs
+    rospy
+  DEPENDS
+    Boost
+    ur_client_library
 )
