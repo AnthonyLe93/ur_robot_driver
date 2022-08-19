@@ -127,7 +127,7 @@ catkin_install_python(PROGRAMS
   scripts/UR10_1_control.py
   scripts/JointState_sub.py
   scripts/ati_1.py
-  scripts/move_gazebo.py
+  scripts/ur10_movit_control.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY config launch resources
