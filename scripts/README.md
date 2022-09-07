@@ -17,6 +17,10 @@ rosrun TAS_python_msg ati_u6_pub.py
 rosrun TAS_python_msg ati_sub.py
 rosrun ur_robot_driver ur10_movit_control.py  
 ``` 
+### __Optional bash script to run utility commands above__
+```bash
+./tas_comand.sh
+```
 ### __Optional script to control robot using action service__
 ```bash
 rosrun ur_robot_driver UR10_1_control.py 
