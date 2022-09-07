@@ -1,5 +1,4 @@
 #!/bin/bash
-# cd $HOME/catkin_ws/src/Universal_Robots_ROS_Driver/ur_robot_driver/
 xterm -hold -e "roslaunch ur10_moveit_config ur10_moveit_planning_execution.launch" &
 xterm -hold -e "roslaunch ur10_moveit_config moveit_rviz.launch rviz_config:=$(rospack find ur10_moveit_config)/launch/moveit.rviz " &
 xterm -hold -e "rosrun TAS_python_msg ati_u6_pub.py" &
