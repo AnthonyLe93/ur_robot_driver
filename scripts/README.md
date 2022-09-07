@@ -4,7 +4,7 @@ Dependencies - clone this repo into the Universal_Robots_ROS_Driver
 git clone git@github.com:AnthonyLe93/TAS_python_msg.git
 ```
 ## __Starting UR10-1__
-might need to run this command for every terminal spawn.
+might need to run the 1st command below for every terminal spawn.
 ```bash
 source devel/setup.bash
 roslaunch ur_robot_driver tas-ur10-1.launch
@@ -17,6 +17,10 @@ rosrun TAS_python_msg ati_u6_pub.py
 rosrun TAS_python_msg ati_sub.py
 rosrun ur_robot_driver ur10_movit_control.py  
 ``` 
+### __Optional bash script to run utility commands above__
+```bash
+./tas_command.sh
+```
 ### __Optional script to control robot using action service__
 ```bash
 rosrun ur_robot_driver UR10_1_control.py 
